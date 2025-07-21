@@ -1,0 +1,15 @@
+# Commands to run after creating the GitHub repository
+# Replace 'yourusername' with your actual GitHub username
+
+# Add the remote repository
+git remote add origin https://github.com/yourusername/calendar_agentv1.git
+
+# Rename the default branch to main (if needed)
+git branch -M main
+
+# Push to GitHub
+git push -u origin main
+
+# Alternative if you prefer SSH (if you have SSH keys set up):
+# git remote add origin git@github.com:yourusername/calendar_agentv1.git
+# git push -u origin main
