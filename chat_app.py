@@ -321,8 +321,12 @@ def process_user_request(message, creds):
         if not task_lists:
             return "❌ No task lists found. Please create a task list in Google Tasks first."
 
-        # Use first task list or default list
-        default_list = task_lists[0]
+        # Use selected task list from sidebar or first available list
+        if "default_task_list_selector" in st.session_state:
+            selected_index = st.session_state.default_task_list_selector
+            default_list = task_lists[selected_index] if selected_index < len(task_lists) else task_lists[0]
+        else:
+            default_list = task_lists[0]
 
         # Convert due date to ISO format if present
         due_date_iso = None
@@ -515,10 +519,11 @@ if st.session_state.creds:
                 "Select default list for new tasks:",
                 range(len(task_list_names)),
                 format_func=lambda x: task_list_names[x],
-                key="default_task_list"
+                key="default_task_list_selector"
             )
-            # Store selected list in session state
-            st.session_state.default_task_list = task_lists[selected_list_index]
+            # Display selected list info
+            selected_list = task_lists[selected_list_index]
+            st.caption(f"New tasks will be added to: **{selected_list['title']}**")
 else:
     # Authentication required
     st.markdown("### 🔐 Authentication Required")
